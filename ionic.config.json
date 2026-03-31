@@ -1,0 +1,7 @@
+{
+  "name": "calculadora-gorjeta",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
