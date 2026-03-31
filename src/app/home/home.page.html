@@ -1,36 +1,59 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title>Calculadora ISPCAÁLA</ion-title>
+    <ion-title>Gorjeta Pro</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Calcular Gorjeta</ion-card-title>
-    </ion-card-header>
+<ion-content>
+  <div class="header-decoration"></div>
 
-    <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">Valor da Conta (Kz)</ion-label>
-        <ion-input type="number" [(ngModel)]="valorConta"></ion-input>
-      </ion-item>
+  <div class="container">
+    <ion-card class="main-card">
+      <ion-card-header>
+        <ion-card-title>Calculadora Gorjeta </ion-card-title>
+      </ion-card-header>
 
-      <ion-item>
-        <ion-label position="floating">% de Gorjeta</ion-label>
-        <ion-input type="number" [(ngModel)]="porcentagem"></ion-input>
-      </ion-item>
+      <ion-card-content>
+        <div class="input-group">
+          <ion-label>Valor da Conta (Kz)</ion-label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon name="cash-outline" slot="start"></ion-icon>
+            <ion-input type="number" placeholder="0.00" [(ngModel)]="valorConta" (ionInput)="calcular()"></ion-input>
+          </ion-item>
+        </div>
 
-      <ion-button expand="block" shape="round" class="ion-margin-top" (click)="calcular()">
-        Calcular Total
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+        <div class="percentage-group">
+          <ion-label>Porcentagem da Gorjeta</ion-label>
+          <div class="chip-container">
+            <button type="button" [class.active]="porcentagem === 10" (click)="selecionarPorcentagem(10)">10%</button>
+            <button type="button" [class.active]="porcentagem === 15" (click)="selecionarPorcentagem(15)">15%</button>
+            <button type="button" [class.active]="porcentagem === 20" (click)="selecionarPorcentagem(20)">20%</button>
+          </div>
+        </div>
 
-  <ion-card color="light" *ngIf="total > 0">
-    <ion-card-content style="text-align: center;">
-      <h2>Total a Pagar:</h2>
-      <h1 style="color: #3880ff;">{{ total }}</h1>
-    </ion-card-content>
-  </ion-card>
+        <div class="input-group">
+          <ion-label>Dividir por quantas pessoas?</ion-label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+            <ion-input type="number" [(ngModel)]="numPessoas" (ionInput)="calcular()"></ion-input>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="result-area" *ngIf="total > 0">
+      <ion-card class="result-card">
+        <ion-card-content>
+          <p>Total com Gorjeta</p>
+          <h1 class="total-value">Kz {{ total | number:'1.2-2' }}</h1>
+          
+          <div class="per-person" *ngIf="numPessoas > 1">
+            <div class="divider"></div>
+            <p>Cada pessoa paga</p>
+            <h2 class="per-person-value">Kz {{ totalPorPessoa | number:'1.2-2' }}</h2>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>
